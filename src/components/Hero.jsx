@@ -75,10 +75,10 @@ export default function Hero() {
         style={{ y: headY, opacity: opac }}
         className="relative z-10 flex flex-col items-center text-center pt-32 pb-8 px-4"
       >
-        {/* Headline */}
-        <div className="mb-5">
-          <motion.p {...up(0.7)} className="grotesk font-bold"
-            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', lineHeight: 1.08, color: 'rgba(255,255,255,0.96)' }}>
+        {/* Headline — wrapped in h1 for SEO */}
+        <h1 className="mb-5" style={{ margin: 0 }}>
+          <motion.span {...up(0.7)} className="grotesk font-bold"
+            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', lineHeight: 1.08, color: 'rgba(255,255,255,0.96)', display: 'block' }}>
             Driven By{' '}
             <span className="relative inline-block">
               Results,
@@ -87,9 +87,9 @@ export default function Hero() {
                 initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
                 transition={{ delay: 1.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }} />
             </span>
-          </motion.p>
-          <motion.p {...up(0.9)} className="grotesk font-bold"
-            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', lineHeight: 1.08, color: 'rgba(255,255,255,0.96)' }}>
+          </motion.span>
+          <motion.span {...up(0.9)} className="grotesk font-bold"
+            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', lineHeight: 1.08, color: 'rgba(255,255,255,0.96)', display: 'block' }}>
             <span className="relative inline-block mr-3">
               Built
               <motion.span className="absolute inset-x-0 rounded-full"
@@ -98,14 +98,14 @@ export default function Hero() {
                 transition={{ delay: 1.58, duration: 0.48, ease: [0.22, 1, 0.36, 1] }} />
             </span>
             For Brands
-          </motion.p>
-        </div>
+          </motion.span>
+        </h1>
 
         {/* Subtext */}
         <motion.p {...up(1.3)}
           className="text-sm sm:text-base max-w-sm sm:max-w-lg leading-relaxed mb-8"
           style={{ color: 'rgba(255,255,255,0.42)' }}>
-          We help ambitious brands in India dominate their market through data-driven social media, SEO, and precision paid advertising.
+          Coimbatore's data-driven digital marketing agency — helping ambitious brands dominate through social media, SEO, and precision paid advertising.
         </motion.p>
 
         {/* CTA */}
