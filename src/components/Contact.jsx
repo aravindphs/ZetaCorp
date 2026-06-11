@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
-import emailjs from '@emailjs/browser';
 import SectionWrapper from './SectionWrapper';
 
 const WA_BASE = 'https://wa.me/918148634409';
@@ -24,18 +23,22 @@ export default function Contact() {
     setSending(true);
     setError('');
     try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          reply_to: form.email,
+      const res = await fetch('https://formsubmit.co/ajax/contact@zetacorpsolutions.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
           phone: form.phone || 'Not provided',
           service: form.service,
           message: form.message || '—',
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+          _subject: 'New Inquiry — ZetaCorp Website',
+          _replyto: form.email,
+          _captcha: 'false',
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
       setSent(true);
     } catch {
       setError('Failed to send. Please reach us via WhatsApp or email directly.');
