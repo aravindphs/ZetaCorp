@@ -8,8 +8,10 @@ import Marquee      from './components/Marquee';
 import Services     from './components/Services';
 import Stats        from './components/Stats';
 import CaseStudies  from './components/CaseStudies';
+import Process      from './components/Process';
 import Pricing      from './components/Pricing';
 import Testimonials from './components/Testimonials';
+import FAQ          from './components/FAQ';
 import Contact      from './components/Contact';
 import Footer       from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
@@ -29,10 +31,13 @@ export default function App() {
         <Services />
         <Stats />
         <ZigZag flip />
-        <CaseStudies />
+        <Process />
         <ZigZag />
+        <CaseStudies />
+        <ZigZag flip />
         <Pricing />
         <Testimonials />
+        <FAQ />
         <Contact />
       </main>
       <Footer />

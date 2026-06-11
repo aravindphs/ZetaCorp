@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 
-const WA = 'https://wa.me/918148634409';
+const WA_BASE = 'https://wa.me/918148634409';
 
 export default function PopupForm() {
   const [show, setShow] = useState(false);
@@ -11,8 +11,38 @@ export default function PopupForm() {
 
   useEffect(() => {
     if (sessionStorage.getItem('zc_popup')) return;
-    const t = setTimeout(() => setShow(true), 4000);
-    return () => clearTimeout(t);
+
+    let triggered = false;
+    const trigger = () => {
+      if (triggered) return;
+      triggered = true;
+      setShow(true);
+    };
+
+    // Trigger 1: scroll past 40% of page depth
+    const onScroll = () => {
+      const depth = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      if (depth > 0.4) { trigger(); cleanup(); }
+    };
+
+    // Trigger 2: exit intent (mouse moves to top of viewport on desktop)
+    const onMouseLeave = (e) => {
+      if (e.clientY <= 0) { trigger(); cleanup(); }
+    };
+
+    // Fallback: show after 25s regardless
+    const fallback = setTimeout(() => { trigger(); cleanup(); }, 25000);
+
+    const cleanup = () => {
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('mouseleave', onMouseLeave);
+      clearTimeout(fallback);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave);
+
+    return cleanup;
   }, []);
 
   const close = () => {
@@ -27,7 +57,7 @@ export default function PopupForm() {
     const msg = encodeURIComponent(
       `Hi ZetaCorp! I'd like a free digital audit.\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nInterested in: ${form.service}`
     );
-    window.open(`${WA}?text=${msg}`, '_blank');
+    window.open(`${WA_BASE}?text=${msg}`, '_blank');
     setSent(true);
     setTimeout(close, 2200);
   };
@@ -97,7 +127,7 @@ export default function PopupForm() {
                   >
                     <option value="">I need help with…</option>
                     <option>Social Media Management</option>
-                    <option>SEO & Content</option>
+                    <option>SEO &amp; Content</option>
                     <option>Paid Advertising</option>
                     <option>Full Digital Package</option>
                   </select>

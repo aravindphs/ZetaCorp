@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
 
-const WA = 'https://wa.me/918148634409?text=Hi%20ZetaCorp!%20I%27d%20like%20a%20free%20digital%20audit%20for%20my%20brand.';
+const WA_BASE = 'https://wa.me/918148634409';
 
 const serviceList = [
   'Social Media Management', 'SEO & Content', 'Paid Advertising (Meta/Google)',
@@ -20,7 +20,7 @@ export default function Contact() {
     const msg = encodeURIComponent(
       `Hi ZetaCorp! I'm reaching out via your website.\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nService needed: ${form.service}\nMessage: ${form.message}`
     );
-    window.open(`${WA}&text=${msg}`, '_blank');
+    window.open(`${WA_BASE}?text=${msg}`, '_blank');
     setSent(true);
   };
 

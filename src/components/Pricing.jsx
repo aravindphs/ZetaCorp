@@ -1,7 +1,13 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiCheck } from 'react-icons/fi';
 
-const WA_PRICING = 'https://wa.me/918148634409?text=Hi%20ZetaCorp!%20I%27m%20interested%20in%20your%20';
+const WA_BASE = 'https://wa.me/918148634409';
+
+const buildWA = (planName, billing) =>
+  `${WA_BASE}?text=${encodeURIComponent(
+    `Hi ZetaCorp! I'm interested in your ${planName} package on a ${billing} basis. Can you share more details?`
+  )}`;
 
 const plans = [
   {
@@ -16,7 +22,6 @@ const plans = [
       'Basic Ad Campaign Setup',
     ],
     highlight: false,
-    wa: WA_PRICING + 'Standard%20package.',
   },
   {
     name: 'Premium',
@@ -33,7 +38,6 @@ const plans = [
       'Monthly Report',
     ],
     highlight: true,
-    wa: WA_PRICING + 'Premium%20package.',
   },
   {
     name: 'Platinum',
@@ -51,11 +55,12 @@ const plans = [
       'Instagram Automation',
     ],
     highlight: false,
-    wa: WA_PRICING + 'Platinum%20package.',
   },
 ];
 
 export default function Pricing() {
+  const [billing, setBilling] = useState('monthly');
+
   return (
     <section id="pricing" className="py-24 sm:py-32" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
@@ -64,7 +69,7 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-16"
+          className="mb-10"
         >
           <span className="label-pill mb-4 inline-flex"><span className="dot" /> Packages</span>
           <h2 className="grotesk font-bold leading-tight" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: '#111111' }}>
@@ -72,9 +77,58 @@ export default function Pricing() {
             <span style={{ color: '#FF0000' }}>Custom options available too.</span>
           </h2>
           <p className="mt-4 text-base max-w-xl leading-relaxed" style={{ color: '#6B7280' }}>
-            Every brand is different. These packages are starting points — we tailor every engagement to your specific goals and budget. Reach out on WhatsApp to discuss what works for you.
+            Every brand is different — these packages are starting points. We tailor every engagement to your goals and budget.
           </p>
         </motion.div>
+
+        {/* Billing toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+          className="flex items-center justify-center gap-3 mb-12"
+        >
+          <button
+            onClick={() => setBilling('monthly')}
+            className="px-5 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer"
+            style={{
+              background: billing === 'monthly' ? '#111111' : 'transparent',
+              color: billing === 'monthly' ? '#FFFFFF' : '#6B7280',
+              border: billing === 'monthly' ? '1.5px solid #111111' : '1.5px solid #E5E5E5',
+            }}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setBilling('quarterly')}
+            className="px-5 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer flex items-center gap-2"
+            style={{
+              background: billing === 'quarterly' ? '#111111' : 'transparent',
+              color: billing === 'quarterly' ? '#FFFFFF' : '#6B7280',
+              border: billing === 'quarterly' ? '1.5px solid #111111' : '1.5px solid #E5E5E5',
+            }}
+          >
+            Quarterly
+            <span
+              className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+              style={{ background: '#FF0000', color: '#FFFFFF' }}
+            >
+              SAVE
+            </span>
+          </button>
+        </motion.div>
+
+        {billing === 'quarterly' && (
+          <motion.p
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center text-sm mb-10"
+            style={{ color: '#6B7280' }}
+          >
+            Quarterly plans include priority support, a dedicated account manager, and a free strategy review.
+          </motion.p>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
           {plans.map((plan, i) => (
@@ -91,21 +145,36 @@ export default function Pricing() {
                 boxShadow: plan.highlight ? '0 24px 60px rgba(255,0,0,0.12)' : 'none',
               }}
             >
-              {/* Card header */}
               <div
                 className="px-7 pt-7 pb-6"
                 style={{ borderBottom: `1px solid ${plan.highlight ? 'rgba(255,255,255,0.08)' : '#E5E5E5'}` }}
               >
-                {plan.highlight && (
-                  <span
-                    className="inline-block text-[10px] font-bold px-3 py-1 rounded-full mb-3 tracking-widest uppercase"
-                    style={{ background: '#FF0000', color: '#FFFFFF' }}
-                  >
-                    Most Popular
-                  </span>
-                )}
+                <div className="flex items-start justify-between mb-2">
+                  {plan.highlight && (
+                    <span
+                      className="text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase"
+                      style={{ background: '#FF0000', color: '#FFFFFF' }}
+                    >
+                      Most Popular
+                    </span>
+                  )}
+                  <AnimatePresence mode="wait">
+                    {billing === 'quarterly' && (
+                      <motion.span
+                        key="qbadge"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="text-[10px] font-bold px-2 py-1 rounded-full tracking-wide ml-auto"
+                        style={{ background: 'rgba(255,0,0,0.1)', color: '#FF0000' }}
+                      >
+                        3-month plan
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
                 <h3
-                  className="grotesk font-bold text-2xl mb-2"
+                  className="grotesk font-bold text-2xl mb-2 mt-2"
                   style={{ color: plan.highlight ? '#FFFFFF' : '#111111' }}
                 >
                   {plan.name}
@@ -115,7 +184,6 @@ export default function Pricing() {
                 </p>
               </div>
 
-              {/* Features */}
               <ul className="px-7 py-6 flex flex-col gap-3 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
@@ -128,12 +196,28 @@ export default function Pricing() {
                     <span style={{ color: plan.highlight ? '#CCCCCC' : '#2B2B2B' }}>{f}</span>
                   </li>
                 ))}
+                {billing === 'quarterly' && (
+                  <motion.li
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex items-start gap-3 text-sm"
+                  >
+                    <span
+                      className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: 'rgba(255,0,0,0.2)', color: '#FF0000' }}
+                    >
+                      <FiCheck size={10} strokeWidth={3} />
+                    </span>
+                    <span className="font-medium" style={{ color: plan.highlight ? '#FFB0B0' : '#FF0000' }}>
+                      Priority support + account manager
+                    </span>
+                  </motion.li>
+                )}
               </ul>
 
-              {/* CTA */}
               <div className="px-7 pb-7">
                 <a
-                  href={plan.wa}
+                  href={buildWA(plan.name, billing)}
                   target="_blank" rel="noopener noreferrer"
                   className="block w-full text-center font-semibold py-3.5 rounded-xl text-sm transition-colors no-underline"
                   style={{
@@ -157,7 +241,6 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Custom pricing note */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +251,7 @@ export default function Pricing() {
           <p className="text-sm" style={{ color: '#6B7280' }}>
             Need something specific?{' '}
             <a
-              href="https://wa.me/918148634409?text=Hi%20ZetaCorp!%20I%20need%20a%20custom%20digital%20marketing%20package."
+              href={`${WA_BASE}?text=${encodeURIComponent('Hi ZetaCorp! I need a custom digital marketing package tailored to my business.')}`}
               target="_blank" rel="noopener noreferrer"
               className="font-semibold no-underline transition-colors"
               style={{ color: '#FF0000' }}
