@@ -21,14 +21,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  const linkColor = scrolled ? '#2B2B2B' : 'rgba(255,255,255,0.82)';
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-[900]"
       style={{
-        /* Glassmorphic effect: frosted glass on scroll, transparent on top */
-        background: scrolled
-          ? 'rgba(255, 255, 255, 0.72)'
-          : 'rgba(255, 255, 255, 0)',
+        background: scrolled ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0)',
         backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(255,255,255,0.5)' : '1px solid transparent',
@@ -39,10 +38,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <a href="#" className="flex items-center gap-1 no-underline select-none">
-          <span className="grotesk font-bold text-xl tracking-tight" style={{ color: '#111111' }}>
+          <span
+            className="grotesk font-bold text-xl tracking-tight"
+            style={{ color: scrolled ? '#111111' : 'rgba(255,255,255,0.95)', transition: 'color 0.4s ease' }}
+          >
             <span style={{ color: '#FF0000' }}>Z</span>ETA
           </span>
-          <span className="grotesk font-light text-xl tracking-tight" style={{ color: '#6B7280' }}>CORP</span>
+          <span
+            className="grotesk font-light text-xl tracking-tight"
+            style={{ color: scrolled ? '#6B7280' : 'rgba(255,255,255,0.4)', transition: 'color 0.4s ease' }}
+          >
+            CORP
+          </span>
         </a>
 
         {/* Desktop nav */}
@@ -52,9 +59,9 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               className="relative text-sm font-medium no-underline group"
-              style={{ color: '#2B2B2B' }}
+              style={{ color: linkColor, transition: 'color 0.3s ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.color = '#FF0000'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#2B2B2B'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = linkColor; }}
             >
               {l.label}
               <span
@@ -80,7 +87,7 @@ export default function Navbar() {
         {/* Hamburger */}
         <button
           className="lg:hidden cursor-pointer"
-          style={{ color: '#111111' }}
+          style={{ color: scrolled ? '#111111' : '#FFFFFF', transition: 'color 0.4s ease', background: 'none', border: 'none' }}
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -88,7 +95,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu — glassmorphic panel */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div

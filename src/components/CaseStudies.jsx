@@ -5,23 +5,6 @@ import SectionWrapper from './SectionWrapper';
 
 const cases = [
   {
-    tag: 'Healthcare · AI',
-    title: "Building Caretha AI's Digital Presence from Zero",
-    desc: "Full organic social strategy for Caretha AI's pre-launch — Instagram and LinkedIn content calendars, platform-native storytelling, and a paid ads strategy for Meta and LinkedIn.",
-    result: '0 → 3K+ Followers in 90 Days',
-    resultSub: 'Organic growth, no paid spend',
-    detail: {
-      challenge: "Caretha AI was entering a crowded health-tech market with no existing social presence, no community, and limited brand recognition. They needed digital traction before their product launch.",
-      strategy: "We built a full pre-launch organic strategy — crafting a content calendar that mixed educational healthcare content, AI explainers, and founder-led storytelling across Instagram and LinkedIn. We positioned the brand as a thought leader before asking for anything from the audience.",
-      metrics: [
-        { label: 'Followers gained',  value: '3,200+',  sub: 'in 90 days, organic' },
-        { label: 'Avg engagement rate', value: '6.4%',   sub: 'vs industry avg 2.1%' },
-        { label: 'LinkedIn impressions', value: '82K',    sub: 'first 60 days' },
-        { label: 'DMs from potential B2B partners', value: '14',     sub: 'inbound interest' },
-      ],
-    },
-  },
-  {
     tag: 'E-commerce · Fashion',
     title: '3.8× ROAS for a Fashion Brand on Meta Ads',
     desc: 'Restructured ad creatives, audience targeting, and retargeting funnels to dramatically improve return on ad spend for a growing fashion label.',
@@ -161,7 +144,7 @@ export default function CaseStudies() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {cases.map((c, i) => (
             <motion.article
               key={c.title}
