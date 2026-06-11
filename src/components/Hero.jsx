@@ -1,129 +1,171 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-const tagline = ['Your Brand.', 'Their Search.', 'Our Science.'];
+const WA = 'https://wa.me/918148634409?text=Hi%20ZetaCorp!%20I%27d%20like%20a%20free%20digital%20audit%20for%20my%20brand.';
 
 export default function Hero() {
-  const go = (href) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const y      = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const opac   = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 32 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+  });
 
   return (
     <section
+      ref={ref}
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden"
-      style={{ background: '#0A0A0A' }}
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: '#FFFFFF' }}
     >
-      {/* Radial glow */}
+      {/* Subtle background grid */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(232,25,44,0.18) 0%, transparent 70%)' }}
+        style={{
+          backgroundImage: 'linear-gradient(#E5E5E5 1px, transparent 1px), linear-gradient(90deg, #E5E5E5 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          opacity: 0.35,
+        }}
+      />
+      {/* Radial white fade over grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 50%, rgba(255,255,255,0.6) 0%, transparent 100%)' }}
       />
 
-      {/* Floating shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute top-20 right-10 w-32 h-32 float-slow" style={{ opacity: 0.1 }} viewBox="0 0 100 100">
-          <polygon points="50,5 95,75 5,75" fill="none" stroke="#E8192C" strokeWidth="2" />
-        </svg>
-        <svg className="absolute top-1/2 right-1/4 w-20 h-20 float-med" style={{ opacity: 0.08 }} viewBox="0 0 100 100">
-          <rect x="10" y="10" width="80" height="80" fill="none" stroke="#E8192C" strokeWidth="2" transform="rotate(20 50 50)" />
-        </svg>
-        <svg className="absolute bottom-32 left-1/4 w-40 h-40 float-slow" style={{ opacity: 0.06 }} viewBox="0 0 100 100">
-          <polygon points="50,5 95,35 80,85 20,85 5,35" fill="none" stroke="#E8192C" strokeWidth="1.5" />
-        </svg>
-        <svg className="absolute top-1/3 left-10 w-16 h-16 float-med" style={{ opacity: 0.09 }} viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#E8192C" strokeWidth="2" />
-        </svg>
-        <svg className="absolute bottom-20 right-20 w-24 h-24 float-slow" style={{ opacity: 0.07 }} viewBox="0 0 100 100">
-          <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#E8192C" strokeWidth="2" />
-        </svg>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 pt-24 pb-20">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border text-xs font-medium tracking-widest uppercase"
-          style={{ borderColor: 'rgba(232,25,44,0.4)', color: '#E8192C', background: 'rgba(232,25,44,0.07)' }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#E8192C' }} />
-          Digital Marketing Agency — Coimbatore, India
-        </motion.div>
-
-        {/* Headline */}
-        <h1 className="bebas mb-6" style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}>
-          {tagline.map((word, i) => (
-            <motion.span
-              key={word}
-              className="block"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              style={{ color: i === 2 ? '#E8192C' : '#F0F0F0' }}
-            >
-              {word}
+      <motion.div
+        style={{ y, opacity: opac }}
+        className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 pt-28 pb-20 w-full"
+      >
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left */}
+          <div>
+            <motion.span {...fadeUp(0.1)} className="label-pill mb-6 inline-flex">
+              <span className="dot" /> Growth Partners · Coimbatore
             </motion.span>
-          ))}
-        </h1>
 
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.75 }}
-          className="text-base sm:text-lg max-w-xl leading-relaxed mb-10"
-          style={{ color: '#A0A0A0' }}
-        >
-          ZetaCorp Solutions helps brands in India and beyond dominate their markets through data-driven digital marketing.
-        </motion.p>
+            <h1
+              className="grotesk font-bold leading-[1.05] mb-6"
+              style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)', color: '#111111' }}
+            >
+              {[
+                { text: 'We don\'t run', red: false },
+                { text: 'campaigns.', red: false },
+                { text: 'We build your', red: false },
+                { text: 'growth engine.', red: true },
+              ].map(({ text, red }, i) => (
+                <motion.span
+                  key={i}
+                  className="block"
+                  {...fadeUp(0.2 + i * 0.12)}
+                  style={{ color: red ? '#FF0000' : '#111111' }}
+                >
+                  {text}
+                </motion.span>
+              ))}
+            </h1>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex flex-wrap gap-4"
-        >
-          <button
-            onClick={() => go('#contact')}
-            className="px-7 py-3.5 rounded-md text-white font-semibold text-sm transition-all duration-300"
-            style={{ background: '#E8192C' }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 24px rgba(232,25,44,0.5)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; }}
+            <motion.p
+              {...fadeUp(0.68)}
+              className="text-base sm:text-lg leading-relaxed mb-10 max-w-lg"
+              style={{ color: '#6B7280' }}
+            >
+              ZetaCorp Solutions is your dedicated digital growth partner in Coimbatore. We combine strategy, content, and data to turn your brand into a market leader.
+            </motion.p>
+
+            <motion.div {...fadeUp(0.8)} className="flex flex-wrap gap-4">
+              <a
+                href={WA}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#FF0000] hover:bg-[#FF3B3B] text-white font-semibold px-7 py-3.5 rounded-lg text-sm transition-colors no-underline"
+              >
+                Get a Free Audit →
+              </a>
+              <a
+                href="#case-studies"
+                className="inline-flex items-center gap-2 font-semibold px-7 py-3.5 rounded-lg text-sm transition-colors no-underline border"
+                style={{ borderColor: '#E5E5E5', color: '#2B2B2B', background: 'transparent' }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#FF0000'; e.currentTarget.style.color = '#FF0000'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E5E5E5'; e.currentTarget.style.color = '#2B2B2B'; }}
+              >
+                See Our Work
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right — animated metrics card stack */}
+          <motion.div
+            {...fadeUp(0.5)}
+            className="hidden lg:flex flex-col gap-4 items-end"
           >
-            Start a Project →
-          </button>
-          <button
-            onClick={() => go('#case-studies')}
-            className="px-7 py-3.5 rounded-md font-semibold text-sm transition-all duration-300"
-            style={{ border: '1.5px solid rgba(232,25,44,0.6)', color: '#E8192C', background: 'transparent' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(232,25,44,0.08)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            See Our Work
-          </button>
-        </motion.div>
+            {/* Big metric */}
+            <motion.div
+              className="bg-white border rounded-2xl px-8 py-7 shadow-lg w-72"
+              style={{ borderColor: '#E5E5E5' }}
+              whileHover={{ y: -4, boxShadow: '0 20px 60px rgba(0,0,0,0.08)' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+            >
+              <p className="text-xs uppercase tracking-widest mb-2" style={{ color: '#6B7280' }}>Average ROI</p>
+              <p className="grotesk font-bold text-5xl" style={{ color: '#FF0000' }}>3.2×</p>
+              <p className="text-sm mt-1" style={{ color: '#6B7280' }}>return on ad spend across all clients</p>
+            </motion.div>
+
+            <div className="flex gap-4 w-full justify-end">
+              <motion.div
+                className="bg-[#111111] rounded-2xl px-6 py-5 shadow-lg w-36"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+              >
+                <p className="grotesk font-bold text-3xl text-white">50+</p>
+                <p className="text-xs mt-1" style={{ color: '#999' }}>Brands grown</p>
+              </motion.div>
+              <motion.div
+                className="bg-[#FF0000] rounded-2xl px-6 py-5 shadow-lg w-36"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+              >
+                <p className="grotesk font-bold text-3xl text-white">8</p>
+                <p className="text-xs mt-1 text-white/80">Industries</p>
+              </motion.div>
+            </div>
+
+            {/* Tagline card */}
+            <motion.div
+              className="border rounded-xl px-6 py-4 w-72 flex items-center gap-3"
+              style={{ borderColor: '#E5E5E5', background: '#F4F4F4' }}
+              whileHover={{ y: -2 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+            >
+              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#FF0000' }} />
+              <p className="text-sm font-medium" style={{ color: '#2B2B2B' }}>
+                "We treat your brand like our own."
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
+          transition={{ delay: 1.5 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-xs tracking-widest uppercase" style={{ color: '#444' }}>Scroll</span>
-          <div className="w-px h-12 relative overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+          <span className="text-[10px] tracking-[0.18em] uppercase" style={{ color: '#AAAAAA' }}>Scroll</span>
+          <div className="w-px h-10 relative overflow-hidden" style={{ background: '#E5E5E5' }}>
             <motion.div
-              className="w-full absolute top-0"
-              style={{ height: '50%', background: '#E8192C' }}
-              animate={{ top: ['0%', '100%'] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+              className="w-full absolute"
+              style={{ height: '40%', background: '#FF0000' }}
+              animate={{ top: ['-40%', '140%'] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: 'linear' }}
             />
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const stats = [
-  { suffix: '+',  num: 50,  isFloat: false, label: 'Happy Clients' },
-  { suffix: 'x',  num: 3.2, isFloat: true,  label: 'Average ROI Delivered' },
-  { suffix: '',   num: 8,   isFloat: false,  label: 'Industries Served' },
+  { num: 50,  suffix: '+',  isFloat: false, label: 'Brands Grown',          sub: 'Across industries in India' },
+  { num: 3.2, suffix: '×',  isFloat: true,  label: 'Average ROI',           sub: 'Return on ad spend' },
+  { num: 8,   suffix: '',   isFloat: false, label: 'Industries Served',     sub: 'From healthcare to fashion' },
+  { num: 4,   suffix: '+',  isFloat: false, label: 'Years Experience',      sub: 'In digital marketing' },
 ];
 
 function CountUp({ target, suffix, isFloat }) {
@@ -14,35 +15,42 @@ function CountUp({ target, suffix, isFloat }) {
 
   useEffect(() => {
     if (!inView) return;
-    const steps = 60;
-    const interval = 1600 / steps;
+    const steps = 55;
     const step = target / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) { current = target; clearInterval(timer); }
-      setCount(isFloat ? parseFloat(current.toFixed(1)) : Math.floor(current));
-    }, interval);
-    return () => clearInterval(timer);
+    let cur = 0;
+    const t = setInterval(() => {
+      cur += step;
+      if (cur >= target) { cur = target; clearInterval(t); }
+      setCount(isFloat ? parseFloat(cur.toFixed(1)) : Math.floor(cur));
+    }, 1400 / steps);
+    return () => clearInterval(t);
   }, [inView, target, isFloat]);
 
-  return <span ref={ref} className="stat-number">{count}{suffix}</span>;
+  return (
+    <span ref={ref} className="grotesk font-bold" style={{ fontSize: 'clamp(2.8rem, 6vw, 4rem)', color: '#FF0000' }}>
+      {count}{suffix}
+    </span>
+  );
 }
 
 export default function Stats() {
   return (
-    <section className="py-20" style={{ background: '#1A0305' }}>
-      <div className="max-w-5xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
+    <section className="py-24" style={{ background: '#2B2B2B' }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: 'rgba(255,255,255,0.08)' }}>
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.12, duration: 0.5 }}
-              className="flex flex-col items-center justify-center py-10 md:py-6 px-6 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col items-center text-center py-12 px-6"
+              style={{ background: '#2B2B2B' }}
             >
               <CountUp target={s.num} suffix={s.suffix} isFloat={s.isFloat} />
-              <p className="mt-2 text-sm tracking-wide uppercase" style={{ color: '#A0A0A0' }}>{s.label}</p>
+              <p className="grotesk font-semibold text-sm mt-2 text-white">{s.label}</p>
+              <p className="text-xs mt-1" style={{ color: '#999999' }}>{s.sub}</p>
             </motion.div>
           ))}
         </div>

@@ -1,10 +1,10 @@
 import { FiInstagram, FiLinkedin, FiYoutube, FiTwitter } from 'react-icons/fi';
 
-const navLinks = [
+const links = [
   { label: 'Services',     href: '#services' },
   { label: 'Case Studies', href: '#case-studies' },
+  { label: 'Pricing',      href: '#pricing' },
   { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Team',         href: '#team' },
   { label: 'Contact',      href: '#contact' },
 ];
 
@@ -16,67 +16,87 @@ const socials = [
 ];
 
 export default function Footer() {
-  const go = (href) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <footer style={{ background: '#0D0D0D', borderTop: '1px solid #E8192C' }}>
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 mb-10">
+    <footer style={{ background: '#2B2B2B' }}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
+          {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="bebas text-2xl" style={{ color: '#E8192C' }}>ZCS</span>
-              <span className="text-sm font-medium" style={{ color: '#555' }}>ZetaCorp Solutions</span>
+            <div className="flex items-center gap-1 mb-3">
+              <span className="grotesk font-bold text-xl tracking-tight text-white">
+                <span style={{ color: '#FF0000' }}>Z</span>ETA
+              </span>
+              <span className="grotesk font-light text-xl tracking-tight" style={{ color: '#999' }}>CORP</span>
             </div>
-            <p className="text-xs leading-relaxed" style={{ color: '#555' }}>Your Brand. Their Search. Our Science.</p>
-            <p className="mt-4 text-xs" style={{ color: '#444' }}>© 2025 ZetaCorp Solutions Pvt. Ltd.</p>
+            <p className="text-xs leading-relaxed mb-1" style={{ color: '#888' }}>Innovate · Market · Dominate</p>
+            <p className="text-xs" style={{ color: '#888' }}>Your trusted growth partner in Coimbatore.</p>
+            <p className="mt-5 text-xs" style={{ color: '#555' }}>© {new Date().getFullYear()} ZetaCorp Solutions Pvt. Ltd.</p>
           </div>
 
+          {/* Links */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#444' }}>Quick Links</p>
-            <ul className="flex flex-col gap-2.5">
-              {navLinks.map((l) => (
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: '#555' }}>Quick Links</p>
+            <ul className="flex flex-col gap-3">
+              {links.map((l) => (
                 <li key={l.label}>
-                  <button
-                    onClick={() => go(l.href)}
-                    className="text-sm transition-colors duration-200"
-                    style={{ color: '#555' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = '#F0F0F0'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = '#555'; }}
+                  <a
+                    href={l.href}
+                    className="text-sm no-underline transition-colors"
+                    style={{ color: '#888' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = '#FFFFFF'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = '#888'; }}
                   >
                     {l.label}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Social + contact */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#444' }}>Follow Us</p>
-            <div className="flex gap-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: '#555' }}>Follow Us</p>
+            <div className="flex gap-3 mb-6">
               {socials.map((s) => (
                 <a
                   key={s.label} href={s.href} aria-label={s.label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200"
-                  style={{ background: '#1A1A1A', color: '#555' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#E8192C'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = '#555'; }}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all"
+                  style={{ background: 'rgba(255,255,255,0.06)', color: '#888' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#FF0000'; e.currentTarget.style.background = 'rgba(255,0,0,0.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#888'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
                 >
                   <s.icon size={16} />
                 </a>
               ))}
             </div>
+            <a
+              href="mailto:contact@zetacorpsolutions.com"
+              className="text-sm no-underline transition-colors block"
+              style={{ color: '#888' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#FF0000'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#888'; }}
+            >
+              contact@zetacorpsolutions.com
+            </a>
+            <a
+              href="tel:+919786101960"
+              className="text-sm no-underline transition-colors block mt-1"
+              style={{ color: '#888' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#FF0000'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#888'; }}
+            >
+              +91 97861 01960
+            </a>
           </div>
         </div>
-      </div>
 
-      <div
-        className="border-t px-5 sm:px-8 py-4 text-center text-xs"
-        style={{ borderColor: 'rgba(255,255,255,0.05)', color: '#333' }}
-      >
-        Designed & Built by ZetaCorp Solutions
+        <div
+          className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
+          style={{ borderColor: 'rgba(255,255,255,0.06)', color: '#444' }}
+        >
+          <span>ZetaCorp Solutions Pvt. Ltd. · Coimbatore, Tamil Nadu</span>
+          <span>Designed in-house · Powered by results</span>
+        </div>
       </div>
     </footer>
   );
