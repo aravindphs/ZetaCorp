@@ -1,0 +1,73 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- White background -->
+  <rect width="1200" height="580" fill="#FFFFFF"/>
+
+  <!-- Decorative pink accent top-right -->
+  <rect x="1148" y="0" width="52" height="130" rx="6" fill="#FFD6D6" opacity="0.85"/>
+  <rect x="1165" y="0" width="35" height="80" rx="5" fill="#FFB8B8" opacity="0.6"/>
+
+  <!-- ZETACORP wordmark -->
+  <text x="58" y="84" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" fill="#FF0000" letter-spacing="-1">ZETACORP</text>
+
+  <!-- Eyebrow label -->
+  <text x="60" y="198" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="12.5" fill="#FF0000" letter-spacing="2.8">AI INTEGRATED DIGITAL MARKETING</text>
+
+  <!-- Headline -->
+  <text x="58" y="278" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="68" fill="#111111">Learn. Build.</text>
+  <text x="58" y="360" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="68">
+    <tspan fill="#111111">Get </tspan><tspan fill="#FF0000">Hired.</tspan>
+  </text>
+
+  <!-- Sub-tagline -->
+  <text x="60" y="422" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#444444">6 months · 3 live projects · 9+ AI tools · Demo Day</text>
+
+  <!-- ── Right panel ── -->
+  <rect x="592" y="28" width="574" height="524" rx="3" fill="#F1F1F1"/>
+  <!-- Red left-edge accent -->
+  <rect x="592" y="28" width="5" height="524" fill="#FF0000"/>
+
+  <!-- Panel heading -->
+  <text x="622" y="80" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="13" fill="#FF0000" letter-spacing="2.5">COURSES WE OFFER</text>
+
+  <!-- Course pills — Row 1 -->
+  <rect x="620" y="95"  width="252" height="44" rx="22" fill="white"/>
+  <text x="648" y="122" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">MERN Stack</text>
+  <rect x="884" y="95"  width="252" height="44" rx="22" fill="white"/>
+  <text x="912" y="122" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Python Full Stack</text>
+
+  <!-- Row 2 -->
+  <rect x="620" y="150" width="252" height="44" rx="22" fill="white"/>
+  <text x="648" y="177" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Java Full Stack</text>
+  <rect x="884" y="150" width="252" height="44" rx="22" fill="white"/>
+  <text x="912" y="177" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Data Science</text>
+
+  <!-- Row 3 -->
+  <rect x="620" y="205" width="252" height="44" rx="22" fill="white"/>
+  <text x="648" y="232" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">AI Development</text>
+  <rect x="884" y="205" width="252" height="44" rx="22" fill="white"/>
+  <text x="912" y="232" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">UI/UX Design</text>
+
+  <!-- Row 4 -->
+  <rect x="620" y="260" width="252" height="44" rx="22" fill="white"/>
+  <text x="648" y="287" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Web Designing</text>
+  <rect x="884" y="260" width="252" height="44" rx="22" fill="white"/>
+  <text x="912" y="287" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Digital Marketing</text>
+
+  <!-- Row 5 -->
+  <rect x="620" y="315" width="252" height="44" rx="22" fill="white"/>
+  <text x="648" y="342" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">No Code AI</text>
+  <rect x="884" y="315" width="252" height="44" rx="22" fill="white"/>
+  <text x="912" y="342" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#111111">Power BI + SQL</text>
+
+  <!-- CTA button -->
+  <rect x="620" y="380" width="516" height="56" rx="4" fill="#FF0000"/>
+  <text x="878" y="414" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="15" fill="white" text-anchor="middle">College Partnerships &amp; MoU Tie-Ups</text>
+
+  <!-- ── Dark footer bar ── -->
+  <rect y="580" width="1200" height="50" fill="#111111"/>
+  <text x="68" y="611" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#999999">Coimbatore, Tamil Nadu</text>
+  <text x="600" y="611" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#999999" text-anchor="middle">Building India's Next Generation of Tech Professionals</text>
+  <text x="1132" y="611" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#999999" text-anchor="end">www.zetanextmind.com</text>
+
+</svg>
