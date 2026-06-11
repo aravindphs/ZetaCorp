@@ -26,11 +26,8 @@ export default function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-12">
             {/* Brand */}
             <div>
-              <div className="flex items-center gap-1 mb-3">
-                <span className="grotesk font-bold text-xl tracking-tight text-white">
-                  <span style={{ color: '#FF0000' }}>Z</span>ETA
-                </span>
-                <span className="grotesk font-light text-xl tracking-tight" style={{ color: '#999' }}>CORP</span>
+              <div className="mb-3">
+                <img src="/logo.svg" alt="ZetaCorp Solutions" style={{ height: '20px', width: 'auto', filter: 'brightness(0) invert(1)' }} />
               </div>
               <p className="text-xs leading-relaxed mb-1" style={{ color: '#888' }}>Innovate · Market · Dominate</p>
               <p className="text-xs" style={{ color: '#888' }}>Your trusted growth partner in Coimbatore.</p>

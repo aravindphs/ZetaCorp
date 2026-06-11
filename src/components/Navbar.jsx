@@ -37,19 +37,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-1 no-underline select-none">
-          <span
-            className="grotesk font-bold text-xl tracking-tight"
-            style={{ color: scrolled ? '#111111' : 'rgba(255,255,255,0.95)', transition: 'color 0.4s ease' }}
-          >
-            <span style={{ color: '#FF0000' }}>Z</span>ETA
-          </span>
-          <span
-            className="grotesk font-light text-xl tracking-tight"
-            style={{ color: scrolled ? '#6B7280' : 'rgba(255,255,255,0.4)', transition: 'color 0.4s ease' }}
-          >
-            CORP
-          </span>
+        <a href="#" className="flex items-center no-underline select-none">
+          <img
+            src="/logo.svg"
+            alt="ZetaCorp Solutions"
+            style={{ height: '22px', width: 'auto', filter: scrolled ? 'none' : 'brightness(0) invert(1)', transition: 'filter 0.4s ease' }}
+          />
         </a>
 
         {/* Desktop nav */}

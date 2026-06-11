@@ -12,8 +12,6 @@ export default function Loader({ onDone }) {
     return () => clearTimeout(t);
   }, [onDone]);
 
-  const letters = 'ZETACORP'.split('');
-
   return (
     <AnimatePresence>
       {visible && (
@@ -22,20 +20,14 @@ export default function Loader({ onDone }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.55, ease: [0.43, 0.13, 0.23, 0.96] }}
         >
-          <div className="flex items-end gap-0.5 mb-5">
-            {letters.map((l, i) => (
-              <motion.span
-                key={i}
-                className="grotesk font-bold tracking-tight select-none"
-                style={{ fontSize: 'clamp(2.8rem,8vw,4.5rem)', color: l === 'Z' ? '#FF0000' : '#111111' }}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {l}
-              </motion.span>
-            ))}
-          </div>
+          <motion.div
+            className="mb-5"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img src="/logo.svg" alt="ZetaCorp Solutions" style={{ height: 'clamp(32px, 6vw, 52px)', width: 'auto' }} />
+          </motion.div>
 
           <motion.div
             className="h-[2px] bg-[#FF0000] rounded-full"
