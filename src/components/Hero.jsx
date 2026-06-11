@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const WA = 'https://wa.me/918148634409?text=Hi%20ZetaCorp!%20I%27d%20like%20a%20free%20digital%20audit%20for%20my%20brand.';
+const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
 
 function Blob({ style, animate, delay, duration = 12 }) {
   return (
@@ -109,10 +109,11 @@ export default function Hero() {
         </motion.p>
 
         {/* CTA */}
-        <motion.a
+        <motion.button
           {...up(1.75)}
-          href={WA} target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 text-sm font-semibold no-underline"
+          type="button"
+          onClick={scrollToContact}
+          className="inline-flex items-center gap-3 text-sm font-semibold cursor-pointer"
           style={{
             background: 'rgba(255,255,255,0.08)',
             border: '1px solid rgba(255,255,255,0.2)',
@@ -131,7 +132,7 @@ export default function Hero() {
           >
             ↗
           </span>
-        </motion.a>
+        </motion.button>
       </motion.div>
 
       {/* ── Lower: full-width phone + connector lines + labels ── */}
@@ -287,12 +288,14 @@ export default function Hero() {
             </p>
 
             {/* CTA — this is the line level for the connectors */}
-            <div
-              className="w-full py-3 rounded-xl text-center text-sm font-bold"
-              style={{ background: '#FF0000', color: '#FFFFFF' }}
+            <button
+              type="button"
+              onClick={scrollToContact}
+              className="w-full py-3 rounded-xl text-center text-sm font-bold cursor-pointer"
+              style={{ background: '#FF0000', color: '#FFFFFF', border: 'none' }}
             >
               Get Free Audit
-            </div>
+            </button>
           </div>
         </motion.div>
 

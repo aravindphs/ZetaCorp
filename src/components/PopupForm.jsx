@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
-
-const WA_BASE = 'https://wa.me/918148634409';
+import emailjs from '@emailjs/browser';
 
 export default function PopupForm() {
   const [show, setShow] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '' });
 
   useEffect(() => {
@@ -19,30 +20,29 @@ export default function PopupForm() {
       setShow(true);
     };
 
-    // Trigger 1: scroll past 40% of page depth
-    const onScroll = () => {
-      const depth = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      if (depth > 0.4) { trigger(); cleanup(); }
-    };
+    // Trigger 1: when Services section scrolls into view
+    let observer;
+    const servicesEl = document.getElementById('services');
+    if (servicesEl) {
+      observer = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) { trigger(); observer.disconnect(); } },
+        { threshold: 0.3 }
+      );
+      observer.observe(servicesEl);
+    }
 
-    // Trigger 2: exit intent (mouse moves to top of viewport on desktop)
-    const onMouseLeave = (e) => {
-      if (e.clientY <= 0) { trigger(); cleanup(); }
-    };
+    // Trigger 2: exit intent on desktop
+    const onMouseLeave = (e) => { if (e.clientY <= 0) trigger(); };
+    document.addEventListener('mouseleave', onMouseLeave);
 
-    // Fallback: show after 25s regardless
-    const fallback = setTimeout(() => { trigger(); cleanup(); }, 25000);
+    // Fallback: 25s
+    const fallback = setTimeout(trigger, 25000);
 
-    const cleanup = () => {
-      window.removeEventListener('scroll', onScroll);
+    return () => {
+      observer?.disconnect();
       document.removeEventListener('mouseleave', onMouseLeave);
       clearTimeout(fallback);
     };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    document.addEventListener('mouseleave', onMouseLeave);
-
-    return cleanup;
   }, []);
 
   const close = () => {
@@ -52,14 +52,29 @@ export default function PopupForm() {
 
   const upd = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const msg = encodeURIComponent(
-      `Hi ZetaCorp! I'd like a free digital audit.\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nInterested in: ${form.service}`
-    );
-    window.open(`${WA_BASE}?text=${msg}`, '_blank');
-    setSent(true);
-    setTimeout(close, 2200);
+    setSending(true);
+    setError('');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          reply_to: form.email,
+          phone: form.phone || 'Not provided',
+          service: form.service,
+          message: 'Free digital audit request via popup form.',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setSent(true);
+      setTimeout(close, 2200);
+    } catch {
+      setError('Failed to send. Please use the contact form below.');
+      setSending(false);
+    }
   };
 
   return (
@@ -105,8 +120,8 @@ export default function PopupForm() {
                   <div className="w-12 h-12 rounded-full bg-[#F4F4F4] flex items-center justify-center mx-auto mb-3">
                     <span className="text-[#FF0000] text-xl font-bold">✓</span>
                   </div>
-                  <p className="grotesk font-semibold text-[#111111] text-lg">Opening WhatsApp…</p>
-                  <p className="text-sm text-[#6B7280] mt-1">We'll get back to you shortly.</p>
+                  <p className="grotesk font-semibold text-[#111111] text-lg">Request Sent!</p>
+                  <p className="text-sm text-[#6B7280] mt-1">We'll reach out within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={submit} className="flex flex-col gap-3">
@@ -131,13 +146,16 @@ export default function PopupForm() {
                     <option>Paid Advertising</option>
                     <option>Full Digital Package</option>
                   </select>
+                  {error && <p className="text-xs text-center" style={{ color: '#FF0000' }}>{error}</p>}
                   <button
                     type="submit"
-                    className="w-full bg-[#FF0000] hover:bg-[#FF3B3B] text-white font-semibold py-3 rounded-lg text-sm transition-colors cursor-pointer mt-1"
+                    disabled={sending}
+                    className="w-full text-white font-semibold py-3 rounded-lg text-sm transition-colors mt-1"
+                    style={{ background: sending ? '#FF6B6B' : '#FF0000', cursor: sending ? 'not-allowed' : 'pointer' }}
                   >
-                    Claim Free Audit →
+                    {sending ? 'Sending…' : 'Claim Free Audit →'}
                   </button>
-                  <p className="text-center text-[11px] text-[#6B7280]">No spam · We'll reach out on WhatsApp</p>
+                  <p className="text-center text-[11px] text-[#6B7280]">No spam · We'll reply to your email</p>
                 </form>
               )}
             </div>

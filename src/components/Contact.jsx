@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import SectionWrapper from './SectionWrapper';
 
 const WA_BASE = 'https://wa.me/918148634409';
@@ -13,16 +14,34 @@ const serviceList = [
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
   const upd = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const msg = encodeURIComponent(
-      `Hi ZetaCorp! I'm reaching out via your website.\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nService needed: ${form.service}\nMessage: ${form.message}`
-    );
-    window.open(`${WA_BASE}?text=${msg}`, '_blank');
-    setSent(true);
+    setSending(true);
+    setError('');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          reply_to: form.email,
+          phone: form.phone || 'Not provided',
+          service: form.service,
+          message: form.message || '—',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setSent(true);
+    } catch {
+      setError('Failed to send. Please reach us via WhatsApp or email directly.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const inStyle = {
@@ -78,8 +97,8 @@ export default function Contact() {
                 >
                   <span className="text-white text-xl font-bold">✓</span>
                 </div>
-                <p className="grotesk font-bold text-xl mb-2" style={{ color: '#111111' }}>Opening WhatsApp…</p>
-                <p className="text-sm" style={{ color: '#6B7280' }}>We'll respond within 24 hours.</p>
+                <p className="grotesk font-bold text-xl mb-2" style={{ color: '#111111' }}>Message Sent!</p>
+                <p className="text-sm" style={{ color: '#6B7280' }}>We'll reply to your email within 24 hours.</p>
               </div>
             ) : (
               <form
@@ -132,14 +151,18 @@ export default function Contact() {
                     onBlur={(e) => { e.target.style.borderColor = '#E5E5E5'; }}
                   />
                 </div>
+                {error && (
+                  <p className="text-xs text-center" style={{ color: '#FF0000' }}>{error}</p>
+                )}
                 <button
                   type="submit"
+                  disabled={sending}
                   className="py-4 rounded-xl font-semibold text-sm text-white transition-colors"
-                  style={{ background: '#FF0000' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = '#FF3B3B'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = '#FF0000'; }}
+                  style={{ background: sending ? '#FF6B6B' : '#FF0000', cursor: sending ? 'not-allowed' : 'pointer' }}
+                  onMouseEnter={(e) => { if (!sending) e.currentTarget.style.background = '#FF3B3B'; }}
+                  onMouseLeave={(e) => { if (!sending) e.currentTarget.style.background = '#FF0000'; }}
                 >
-                  Send via WhatsApp →
+                  {sending ? 'Sending…' : 'Send Message →'}
                 </button>
                 <p className="text-center text-xs" style={{ color: '#6B7280' }}>We'll respond within 24 hours · No spam ever</p>
               </form>
