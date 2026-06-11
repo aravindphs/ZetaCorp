@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiMonitor, FiTrendingUp, FiTarget, FiSearch, FiShare2, FiFeather } from 'react-icons/fi';
+import SectionWrapper from './SectionWrapper';
 
 const services = [
   { icon: FiFeather,    name: 'Branding & Identity',      desc: 'Logos, visual systems, and brand voice that make you unmistakable in your market.' },
@@ -12,7 +13,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 sm:py-32" style={{ background: '#FFFFFF' }}>
+    <SectionWrapper id="services" bigText="SERVICES" bg="#FFFFFF" className="py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -59,6 +60,6 @@ export default function Services() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

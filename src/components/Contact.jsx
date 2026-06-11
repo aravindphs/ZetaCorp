@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
+import SectionWrapper from './SectionWrapper';
 
 const WA_BASE = 'https://wa.me/918148634409';
 
@@ -38,7 +39,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-32" style={{ background: '#FFFFFF' }}>
+    <SectionWrapper id="contact" bigText="CONTACT" bg="#FFFFFF" className="py-24 sm:py-32">
       <div className="max-w-6xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -207,6 +208,6 @@ export default function Contact() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

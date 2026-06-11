@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
+import SectionWrapper from './SectionWrapper';
 
 const cases = [
   {
@@ -131,7 +132,17 @@ export default function CaseStudies() {
   const [active, setActive] = useState(null);
 
   return (
-    <section id="case-studies" className="py-24 sm:py-32" style={{ background: '#F4F4F4' }}>
+    <SectionWrapper
+      id="case-studies"
+      bigText="OUR WORK"
+      bg="#F4F4F4"
+      className="py-24 sm:py-32"
+      overlay={
+        <AnimatePresence>
+          {active && <Modal c={active} onClose={() => setActive(null)} />}
+        </AnimatePresence>
+      }
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -190,10 +201,6 @@ export default function CaseStudies() {
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {active && <Modal c={active} onClose={() => setActive(null)} />}
-      </AnimatePresence>
-    </section>
+    </SectionWrapper>
   );
 }

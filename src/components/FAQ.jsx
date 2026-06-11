@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import SectionWrapper from './SectionWrapper';
 
 const faqs = [
   {
@@ -77,7 +78,7 @@ export default function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="py-24 sm:py-32" style={{ background: '#F4F4F4' }}>
+    <SectionWrapper id="faq" bigText="FAQ" bg="#F4F4F4" className="py-24 sm:py-32">
       <div className="max-w-3xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -130,6 +131,6 @@ export default function FAQ() {
           </a>
         </motion.p>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

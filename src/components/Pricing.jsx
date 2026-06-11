@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCheck } from 'react-icons/fi';
+import SectionWrapper from './SectionWrapper';
 
 const WA_BASE = 'https://wa.me/918148634409';
 
@@ -62,7 +63,7 @@ export default function Pricing() {
   const [billing, setBilling] = useState('monthly');
 
   return (
-    <section id="pricing" className="py-24 sm:py-32" style={{ background: '#FFFFFF' }}>
+    <SectionWrapper id="pricing" bigText="PRICING" bg="#FFFFFF" className="py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -261,6 +262,6 @@ export default function Pricing() {
           </p>
         </motion.div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

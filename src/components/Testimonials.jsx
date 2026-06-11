@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SectionWrapper from './SectionWrapper';
 
 const testimonials = [
   {
@@ -33,7 +34,7 @@ export default function Testimonials() {
   const goTo = (i) => { clearInterval(timerRef.current); setActive(i); startTimer(); };
 
   return (
-    <section id="testimonials" className="py-24 sm:py-32" style={{ background: '#F4F4F4' }}>
+    <SectionWrapper id="testimonials" bigText="STORIES" bg="#F4F4F4" className="py-24 sm:py-32">
       <div className="max-w-4xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -98,6 +99,6 @@ export default function Testimonials() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

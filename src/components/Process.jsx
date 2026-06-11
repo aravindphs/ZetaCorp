@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import SectionWrapper from './SectionWrapper';
 
 const steps = [
   {
@@ -72,7 +73,7 @@ function Connector({ index }) {
 
 export default function Process() {
   return (
-    <section id="process" className="py-24 sm:py-32" style={{ background: '#FFFFFF' }}>
+    <SectionWrapper id="process" bigText="PROCESS" bg="#FFFFFF" className="py-24 sm:py-32">
       <div className="max-w-5xl mx-auto px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -134,6 +135,6 @@ export default function Process() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

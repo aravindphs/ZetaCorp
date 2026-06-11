@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import SectionWrapper from './SectionWrapper';
 
 const stats = [
   { num: 50,  suffix: '+',  isFloat: false, label: 'Brands Grown',          sub: 'Across industries in India' },
@@ -35,7 +36,7 @@ function CountUp({ target, suffix, isFloat }) {
 
 export default function Stats() {
   return (
-    <section className="py-24" style={{ background: '#2B2B2B' }}>
+    <SectionWrapper bigText="NUMBERS" bg="#2B2B2B" darkBg className="py-24">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: 'rgba(255,255,255,0.08)' }}>
           {stats.map((s, i) => (
@@ -55,6 +56,6 @@ export default function Stats() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }
