@@ -180,7 +180,7 @@ export default function Contact() {
 
             {/* WhatsApp direct CTA */}
             <a
-              href={WA}
+              href={`${WA_BASE}?text=${encodeURIComponent("Hi ZetaCorp! I'd like a free digital audit for my brand.")}`}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-3 px-5 py-4 rounded-xl font-semibold text-sm text-white transition-colors no-underline mt-2"
               style={{ background: '#25D366' }}
